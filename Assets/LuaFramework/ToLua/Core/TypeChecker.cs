@@ -217,13 +217,9 @@ namespace LuaInterface
 
         static bool IsMatchUserData(IntPtr L, Type t, int pos)
         {
-            if (t == typeof(long))
+            if (t == typeof(LuaInteger64))
             {
                 return LuaDLL.tolua_isint64(L, pos);
-            }
-            else if (t == typeof(ulong))
-            {
-                return LuaDLL.tolua_isuint64(L, pos);
             }
 
             object obj = null;
@@ -271,11 +267,6 @@ namespace LuaInterface
         {
             if (t.IsArray)
             {
-                if (t.GetElementType().IsArray || t.GetArrayRank() > 1)
-                {
-                    return false;
-                }
-
                 return true;
             }
             else if (t == typeof(LuaTable))

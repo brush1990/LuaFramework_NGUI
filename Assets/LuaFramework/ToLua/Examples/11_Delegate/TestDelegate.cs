@@ -20,7 +20,7 @@ public class TestDelegate: MonoBehaviour
                 if listener.onClick then
                     listener.onClick = listener.onClick + DoClick1                                                    
                 else
-                    listener.onClick = DoClick1                      
+                    listener.onClick = DoClick1    
                 end                
             end
 
@@ -73,28 +73,6 @@ public class TestDelegate: MonoBehaviour
             function RemoveEvent(listener)
                 listener.onClickEvent = listener.onClickEvent - TestEvent
             end
-
-            local t = {name = 'byself'}
-
-            function t:TestSelffunc()
-                print('callback with self: '..self.name)
-            end       
-
-            function AddSelfClick(listener)
-                if listener.onClick then
-                    listener.onClick = listener.onClick + TestEventListener.OnClick(t.TestSelffunc, t)
-                else
-                    listener.onClick = TestEventListener.OnClick(t.TestSelffunc, t)
-                end   
-            end     
-
-            function RemoveSelfClick(listener)
-                if listener.onClick then
-                    listener.onClick = listener.onClick - TestEventListener.OnClick(t.TestSelffunc, t)
-                else
-                    print('empty delegate')
-                end   
-            end
     ";
 
     LuaState state = null;
@@ -108,8 +86,6 @@ public class TestDelegate: MonoBehaviour
     LuaFunction TestOverride = null;
     LuaFunction RemoveEvent = null;
     LuaFunction AddEvent = null;
-    LuaFunction AddSelfClick = null;
-    LuaFunction RemoveSelfClick = null;
    
     //需要删除的转LuaFunction为委托，不需要删除的直接加或者等于即可
     void Awake()
@@ -131,10 +107,7 @@ public class TestDelegate: MonoBehaviour
         RemoveClick2 = state.GetFunction("RemoveClick2");
         TestOverride = state.GetFunction("TestOverride");
         AddEvent = state.GetFunction("AddEvent");
-        RemoveEvent = state.GetFunction("RemoveEvent");
-
-        AddSelfClick = state.GetFunction("AddSelfClick");
-        RemoveSelfClick = state.GetFunction("RemoveSelfClick");
+        RemoveEvent = state.GetFunction("RemoveEvent");        
     }
 
     void Bind(LuaState L)
@@ -155,7 +128,6 @@ public class TestDelegate: MonoBehaviour
         func.EndPCall();                
     }
 
-    //自动生成代码后拷贝过来
     class TestEventListener_OnClick_Event : LuaDelegate
     {
         public TestEventListener_OnClick_Event(LuaFunction func) : base(func) { }
@@ -168,8 +140,7 @@ public class TestDelegate: MonoBehaviour
             func.EndPCall();
         }
     }
-
-    public static Delegate TestEventListener_OnClick(LuaFunction func, LuaTable self, bool flag)
+    public static Delegate TestEventListener_OnClick(LuaFunction func)
     {
         if (func == null)
         {
@@ -194,7 +165,7 @@ public class TestDelegate: MonoBehaviour
         }
     }
 
-    public static Delegate TestEventListener_VoidDelegate(LuaFunction func, LuaTable self, bool flag)
+    public static Delegate TestEventListener_VoidDelegate(LuaFunction func)
     {
         if (func == null)
         {
@@ -273,14 +244,6 @@ public class TestDelegate: MonoBehaviour
         else if (GUI.Button(new Rect(10, 610, 120, 40), "event call"))
         {
             listener.OnClickEvent(gameObject);
-        }
-        else if (GUI.Button(new Rect(200, 10, 120, 40), "+self call"))
-        {
-            CallLuaFunction(AddSelfClick);
-        }
-        else if (GUI.Button(new Rect(200, 60, 120, 40), "-self call"))
-        {
-            CallLuaFunction(RemoveSelfClick);
         }
     }
 

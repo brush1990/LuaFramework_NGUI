@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
-using LuaInterface;
 using LuaFramework;
 
-public class StartUpCommand : ControllerCommand {
-
-    public override void Execute(IMessage message) {
+public class StartUpCommand : ControllerCommand
+{
+    public override void Execute(IMessage message)
+    {
         if (!Util.CheckEnvironment()) return;
 
         GameObject gameMgr = GameObject.Find("GlobalGenerator");
-        if (gameMgr != null) {
+        if (gameMgr != null)
+        {
             AppView appView = gameMgr.AddComponent<AppView>();
         }
         //-----------------关联命令-----------------------

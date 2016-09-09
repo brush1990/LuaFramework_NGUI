@@ -21,7 +21,6 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace LuaInterface
@@ -51,7 +50,12 @@ namespace LuaInterface
 
             public int GetHashCode(object obj)
             {
-                return RuntimeHelpers.GetHashCode(obj);                
+                if (obj != null)
+                {
+                    return obj.GetHashCode();
+                }
+
+                return 0;
             }
         }
 

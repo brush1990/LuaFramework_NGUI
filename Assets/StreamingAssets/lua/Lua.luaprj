@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<Project Name="Lua.luaprj" Cmd="" Arg="" Dir="" >
+    <Filter Name="Lua" >
+        <Filter Name="Common" Directory=".\Common" >
+            <LuaFile RelativePath=".\Common\define.lua" />
+            <LuaFile RelativePath=".\Common\functions.lua" />
+            <LuaFile RelativePath=".\Common\protocal.lua" />
+        </Filter>
+        <Filter Name="Controller" Directory=".\Controller" >
+            <LuaFile RelativePath=".\Controller\MessageCtrl.lua" />
+            <LuaFile RelativePath=".\Controller\PromptCtrl.lua" />
+        </Filter>
+        <Filter Name="Logic" Directory=".\Logic" >
+            <LuaFile RelativePath=".\Logic\CtrlManager.lua" />
+            <LuaFile RelativePath=".\Logic\Game.lua" />
+            <LuaFile RelativePath=".\Logic\LuaClass.lua" />
+            <LuaFile RelativePath=".\Logic\Network.lua" />
+        </Filter>
+        <Filter Name="View" Directory=".\View" >
+            <LuaFile RelativePath=".\View\MessagePanel.lua" />
+            <LuaFile RelativePath=".\View\PromptPanel.lua" />
+        </Filter>
+    </Filter>
+</Project>

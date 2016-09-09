@@ -1,8 +1,4 @@
-﻿/* 
- LuaFramework Code By Jarjin leeibution 3.0 License 
-*/
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 public interface IController
 {
@@ -11,8 +7,8 @@ public interface IController
 
     void ExecuteCommand(IMessage message);
 
-	void RemoveCommand(string messageName);
+    void RemoveCommand(string messageName);
     void RemoveViewCommand(IView view, string[] commandNames);
 
-	bool HasCommand(string messageName);
+    bool HasCommand(string messageName);
 }

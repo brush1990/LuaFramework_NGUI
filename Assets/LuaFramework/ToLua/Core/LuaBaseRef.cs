@@ -21,7 +21,6 @@ SOFTWARE.
 */
 
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace LuaInterface
@@ -53,7 +52,7 @@ namespace LuaInterface
             if (count > 0)
             {
                 return;
-            }            
+            }
 
             Dispose(true);            
         }
@@ -75,20 +74,8 @@ namespace LuaInterface
                 }
                 
                 reference = -1;
-                luaState = null;
-                count = 0;
+                luaState = null;                             
             }            
-        }
-
-        //慎用
-        public void Dispose(int generation)
-        {                         
-            if (count > generation)
-            {
-                return;
-            }
-
-            Dispose(true);
         }
 
         public LuaState GetLuaState()
@@ -103,7 +90,7 @@ namespace LuaInterface
 
         public override int GetHashCode()
         {
-            return RuntimeHelpers.GetHashCode(this);            
+            return reference;
         }
 
         public virtual int GetReference()
@@ -113,53 +100,37 @@ namespace LuaInterface
 
         public override bool Equals(object o)
         {
-            if (o == null) return reference <= 0;
-            LuaBaseRef lr = o as LuaBaseRef;      
-            
-            if (lr == null || lr.reference != reference)
-            {
-                return false;
-            }
-
-            return reference > 0;
+            if ((object)o == null) return false;            
+            LuaBaseRef lbref = o as LuaBaseRef;
+            return lbref != null && lbref.reference == reference;
         }
 
-        static bool CompareRef(LuaBaseRef a, LuaBaseRef b)
+        public static bool operator == (LuaBaseRef a, LuaBaseRef b)
         {
             if (System.Object.ReferenceEquals(a, b))
             {
                 return true;
             }
 
-            object l = a;
+            object l = (object)a;
             object r = b;
 
-            if (l == null && r != null)
+            if (l == null)
             {
                 return r == null || b.reference <= 0;
             }
 
-            if (l != null && r == null)
+            if (r == null)
             {
                 return a.reference <= 0;
             }
 
-            if (a.reference != b.reference)
-            {
-                return false;
-            }
-
-            return a.reference > 0;
-        }
-
-        public static bool operator == (LuaBaseRef a, LuaBaseRef b)
-        {
-            return CompareRef(a, b);
+            return r != null && a.reference == b.reference;
         }
 
         public static bool operator != (LuaBaseRef a, LuaBaseRef b)
         {
-            return !CompareRef(a, b);
+            return !(a == b);
         }
 
         public bool IsAlive()

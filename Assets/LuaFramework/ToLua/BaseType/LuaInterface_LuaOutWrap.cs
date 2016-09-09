@@ -5,8 +5,9 @@ public class LuaInterface_LuaOutWrap
 {
     public static void Register(LuaState L)
     {
-        //L.BeginClass(typeof(LuaInterface.LuaOutMetatable), null);        
-        //L.EndClass();
+        L.BeginClass(typeof(LuaInterface.LuaOutMetatable), null);        
+        L.EndClass();
+
         L.BeginPreLoad();
         L.RegFunction("tolua.out", LuaOpen_ToLua_Out);                   
         L.EndPreLoad();

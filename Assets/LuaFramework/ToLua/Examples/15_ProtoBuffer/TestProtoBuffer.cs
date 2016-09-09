@@ -80,7 +80,7 @@ public class TestProtoBuffer : LuaClient
     protected override void OnLoadFinished()
     {                
         base.OnLoadFinished();
-        luaState.DoString(script, "TestProtoBuffer.cs");
+        luaState.DoString(script);
 
 #if !USE_PROTOBUF_NET
         LuaFunction func = luaState.GetFunction("Encoder");

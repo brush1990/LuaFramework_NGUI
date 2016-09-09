@@ -23,7 +23,6 @@ SOFTWARE.
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using System.Collections;
 using System.Text;
 
 namespace LuaInterface
@@ -38,7 +37,6 @@ namespace LuaInterface
                 {
                     instance = new LuaFileUtils();
                 }
-
                 return instance;
             }
 
@@ -169,7 +167,7 @@ namespace LuaInterface
 
         public virtual byte[] ReadFile(string fileName)
         {
-            if (!beZip)
+            if (!beZip)//非assetbundle模式，去查找lua文件
             {
                 string path = FindFile(fileName);
                 byte[] str = null;
